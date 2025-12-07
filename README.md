@@ -28,5 +28,5 @@ A Minecraft modthat introduces real-time audio visualization mechanics to Minecr
 *   **State Management:** Complex handling of audio states (looping vs. single play) and block updates.
 
 ### 🎥 Demo
-[Link to your Streamable Video 1]
-[Link to your Streamable Video 2]
+[https://streamable.com/9xvb9o]
+[https://streamable.com/bsos3n]
