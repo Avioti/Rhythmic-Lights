@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "rhythmmod:block/high_mids_lamp"
+    },
+    "lit=true": {
+      "model": "rhythmmod:block/high_mids_lamp_lit"
+    }
+  }
+}
+

@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "rhythmmod:block/top_lamp"
+    },
+    "lit=true": {
+      "model": "rhythmmod:block/top_lamp_lit"
+    }
+  }
+}
+

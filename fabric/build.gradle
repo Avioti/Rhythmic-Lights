@@ -1,0 +1,177 @@
+plugins {
+    id 'com.gradleup.shadow'
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+
+    runConfigs.configureEach {
+        // Use MC_USERNAME and MC_ACCESS_TOKEN in your system environment variables to use your Minecraft account in dev
+        if (name == "client") {
+            if(System.getenv('MC_USERNAME') && System.getenv('MC_UUID') && System.getenv('MC_ACCESS_TOKEN')) {
+                programArgs '--username', System.getenv('MC_USERNAME'), '--uuid', System.getenv('MC_UUID'), '--accessToken', System.getenv('MC_ACCESS_TOKEN')
+            }
+        }
+    }
+}
+architectury {
+    platformSetupLoomIde()
+    fabric()
+}
+
+configurations {
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
+
+
+    // Files in this configuration will be bundled into your mod using the Shadow plugin.
+    // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
+
+dependencies {
+
+    modApi "me.shedaniel:RoughlyEnoughItems-fabric:16.0.799"
+
+    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modApi "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
+
+    // Architectury API. This is optional, and you can comment it out if you don't need it.
+    modApi "dev.architectury:architectury-fabric:$rootProject.architectury_version"
+
+    // Cloth Config for configuration screen
+    modApi("me.shedaniel.cloth:cloth-config-fabric:15.0.140") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+    modApi "com.terraformersmc:modmenu:11.0.3"
+
+
+
+    common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
+    shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
+
+    // ➤ FIX: Add TarsosDSP for Fabric Runtime
+    // Both "implementation" (so code can use it) and "include" (so it's bundled in the jar)
+    implementation 'be.tarsos.dsp:core:2.5'
+    implementation 'be.tarsos.dsp:jvm:2.5'
+
+    include 'be.tarsos.dsp:core:2.5'
+    include 'be.tarsos.dsp:jvm:2.5'
+
+    // Bundle TarsosDSP into the Fabric jar for shadow
+    shadowBundle 'be.tarsos.dsp:core:2.5'
+    shadowBundle 'be.tarsos.dsp:jvm:2.5'
+
+    // ➤ FIX: Add OGG Vorbis support for reading Minecraft music discs
+    // All 3 libraries are required: vorbisspi (the provider), tritonus-share (shared code), jorbis (decoder)
+    implementation 'com.googlecode.soundlibs:vorbisspi:1.0.3.3'
+    implementation 'com.googlecode.soundlibs:tritonus-share:0.3.7.4'
+    implementation 'com.googlecode.soundlibs:jorbis:0.0.17.4'
+
+    include 'com.googlecode.soundlibs:vorbisspi:1.0.3.3'
+    include 'com.googlecode.soundlibs:tritonus-share:0.3.7.4'
+    include 'com.googlecode.soundlibs:jorbis:0.0.17.4'
+
+    shadowBundle 'com.googlecode.soundlibs:vorbisspi:1.0.3.3'
+    shadowBundle 'com.googlecode.soundlibs:tritonus-share:0.3.7.4'
+    shadowBundle 'com.googlecode.soundlibs:jorbis:0.0.17.4'
+
+    // ➤ FIX: Add MP3 support for web/custom URL discs
+    // Both libraries are required: mp3spi (the provider) and jlayer (decoder)
+    implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
+    implementation 'com.googlecode.soundlibs:jlayer:1.0.1.4'
+
+    include 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
+    include 'com.googlecode.soundlibs:jlayer:1.0.1.4'
+
+    shadowBundle 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
+    shadowBundle 'com.googlecode.soundlibs:jlayer:1.0.1.4'
+
+    implementation 'com.github.wendykierp:JTransforms:3.1'
+    include 'com.github.wendykierp:JTransforms:3.1'
+    shadowBundle 'com.github.wendykierp:JTransforms:3.1'
+
+    // Apache Commons Codec for SHA256 hashing (URL -> filename)
+    implementation 'commons-codec:commons-codec:1.16.0'
+    include 'commons-codec:commons-codec:1.16.0'
+    shadowBundle 'commons-codec:commons-codec:1.16.0'
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mod_name", rootProject.mod_name
+    inputs.property "mod_author", rootProject.mod_author
+    inputs.property "mod_license", rootProject.mod_license
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version,
+                "mod_name": rootProject.mod_name,
+                "mod_author": rootProject.mod_author,
+                "mod_license": rootProject.mod_license
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = 'dev-shadow'
+
+    // CRITICAL: Merge META-INF/services files so AudioSystem can find OGG providers
+    mergeServiceFiles()
+}
+
+
+sourceSets.main.resources {
+    srcDir project(":common").file("src/main/resources").absolutePath
+
+}
+
+
+remapJar {
+    injectAccessWidener = true
+    inputFile.set shadowJar.archiveFile
+    dependsOn shadowJar
+    archiveClassifier = 'fabric'
+}
+
+jar {
+    archiveClassifier = "dev"
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+publishing {
+    publications {
+        mavenFabric(MavenPublication) {
+            artifactId = rootProject.archives_base_name + "-" + project.name
+            from components.java
+        }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+        // Add repositories to publish to here.
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "rhythmmod:item/rhythm_url_disc"
+  }
+}
+

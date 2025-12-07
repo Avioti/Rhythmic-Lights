@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "rhythmmod:block/rhythm_controller"
+    }
+  }
+}

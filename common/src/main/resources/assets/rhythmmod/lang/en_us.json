@@ -1,0 +1,140 @@
+{
+  "itemGroup.rhythmmod.main": "Rhythm Mod",
+
+  "block.rhythmmod.rhythm_controller": "DJ Station",
+  "block.rhythmmod.rhythm_bulb": "Rhythm Bulb",
+  "block.rhythmmod.ghost_rhythm_bulb": "Ghost Rhythm Bulb",
+
+  "item.rhythmmod.rhythm_url_disc": "Rhythm Disc",
+  "item.rhythmmod.rhythm_url_disc.tooltip": "Custom music disc - Right-click to configure URL",
+
+  "item.rhythmmod.dj_station.tooltip.1": "Links to jukeboxes for music visualization",
+  "item.rhythmmod.dj_station.tooltip.2": "Only the owner can control this station",
+  "item.rhythmmod.dj_station.tooltip.claim": "Shift+Right-Click with Tuning Fork to claim",
+  "item.rhythmmod.dj_station.owner": "§7Owner: §b%s",
+
+  "block.rhythmmod.sub_bass_lamp": "Red Redstone Lamp",
+  "block.rhythmmod.sub_bass_lamp.tooltip": "§7Frequency: §cSub-Bass (20-60 Hz)",
+  "block.rhythmmod.deep_bass_lamp": "Orange Redstone Lamp",
+  "block.rhythmmod.deep_bass_lamp.tooltip": "§7Frequency: §6Deep Bass (60-100 Hz)",
+  "block.rhythmmod.bass_lamp": "Lime Redstone Lamp",
+  "block.rhythmmod.bass_lamp.tooltip": "§7Frequency: §aBass (100-200 Hz)",
+  "block.rhythmmod.low_mids_lamp": "Blue Redstone Lamp",
+  "block.rhythmmod.low_mids_lamp.tooltip": "§7Frequency: §9Low-Mids (200-400 Hz)",
+  "block.rhythmmod.mid_lows_lamp": "White Redstone Lamp",
+  "block.rhythmmod.mid_lows_lamp.tooltip": "§7Frequency: §fMid-Lows (400-600 Hz)",
+  "block.rhythmmod.mids_lamp": "Purple Redstone Lamp",
+  "block.rhythmmod.mids_lamp.tooltip": "§7Frequency: §5Mids (600-1000 Hz)",
+  "block.rhythmmod.mid_highs_lamp": "Pink Redstone Lamp",
+  "block.rhythmmod.mid_highs_lamp.tooltip": "§7Frequency: §dMid-Highs (1-2 kHz)",
+  "block.rhythmmod.high_mids_lamp": "Yellow Redstone Lamp",
+  "block.rhythmmod.high_mids_lamp.tooltip": "§7Frequency: §eHigh-Mids (2-4 kHz)",
+  "block.rhythmmod.highs_lamp": "Cyan Redstone Lamp",
+  "block.rhythmmod.highs_lamp.tooltip": "§7Frequency: §bHighs (4-8 kHz)",
+  "block.rhythmmod.very_highs_lamp": "Magenta Redstone Lamp",
+  "block.rhythmmod.very_highs_lamp.tooltip": "§7Frequency: §dVery Highs (8-12 kHz)",
+  "block.rhythmmod.ultra_lamp": "Gold Redstone Lamp",
+  "block.rhythmmod.ultra_lamp.tooltip": "§7Frequency: §6Ultra (12-16 kHz)",
+  "block.rhythmmod.top_lamp": "Silver Redstone Lamp",
+  "block.rhythmmod.top_lamp.tooltip": "§7Frequency: §7Top (16-20 kHz)",
+
+  "block.rhythmmod.copper_rhythm_bulb": "Copper Rhythm Bulb",
+  "block.rhythmmod.exposed_copper_rhythm_bulb": "Exposed Copper Rhythm Bulb",
+  "block.rhythmmod.weathered_copper_rhythm_bulb": "Weathered Copper Rhythm Bulb",
+  "block.rhythmmod.oxidized_copper_rhythm_bulb": "Oxidized Copper Rhythm Bulb",
+
+  "item.rhythmmod.tuning_wand": "Tuning Fork",
+
+  "item.rhythmmod.tuning_wand.tooltip.header": "Links and configures rhythm components",
+  "item.rhythmmod.tuning_wand.tooltip.store": "§eShift+Right-Click§7 Station to claim & store",
+  "item.rhythmmod.tuning_wand.tooltip.link_jukebox": "§eRight-Click§7 Jukebox to link",
+  "item.rhythmmod.tuning_wand.tooltip.link_bulb": "§eRight-Click§7 Bulb/Light to link",
+  "item.rhythmmod.tuning_wand.tooltip.channel": "§eShift+Right-Click§7 Bulb to cycle channel",
+  "item.rhythmmod.tuning_wand.tooltip.unlink_controller": "§eCtrl+Right-Click§7 Station to unlink jukebox",
+  "item.rhythmmod.tuning_wand.tooltip.unlink_bulb": "§eCtrl+Right-Click§7 Bulb/Light to unlink",
+
+  "frequency.rhythmmod.sub_bass": "Sub-Bass (20-60 Hz)",
+  "frequency.rhythmmod.deep_bass": "Deep Bass (60-100 Hz)",
+  "frequency.rhythmmod.bass": "Bass (100-200 Hz)",
+  "frequency.rhythmmod.low_mids": "Low-Mids (200-400 Hz)",
+  "frequency.rhythmmod.mid_lows": "Mid-Lows (400-600 Hz)",
+  "frequency.rhythmmod.mids": "Mids (600-1000 Hz)",
+  "frequency.rhythmmod.mid_highs": "Mid-Highs (1-2 kHz)",
+  "frequency.rhythmmod.high_mids": "High-Mids (2-4 kHz)",
+  "frequency.rhythmmod.highs": "Highs (4-8 kHz)",
+  "frequency.rhythmmod.very_highs": "Very Highs (8-12 kHz)",
+  "frequency.rhythmmod.ultra": "Ultra (12-16 kHz)",
+  "frequency.rhythmmod.top": "Top (16-20 kHz)",
+  "frequency.rhythmmod.all": "All Frequencies",
+
+  "config.rhythmmod.title": "RhythmMod Configuration",
+
+  "config.rhythmmod.category.visual": "Visual Effects",
+
+  "config.rhythmmod.particleTexture": "Particle Texture",
+  "config.rhythmmod.particleTexture.tooltip.line1": "Choose the particle effect for rhythm lamps and bulbs",
+  "config.rhythmmod.particleTexture.tooltip.line2": "Particles are automatically colored to match each frequency band",
+  "config.rhythmmod.particleTexture.tooltip.line3": "Try different textures to find your favorite visual style!",
+
+  "config.rhythmmod.particleScale": "Particle Size",
+  "config.rhythmmod.particleScale.tooltip.line1": "Control how large the particles appear",
+  "config.rhythmmod.particleScale.tooltip.line2": "Smaller = Better performance, Larger = More dramatic effect",
+
+  "config.rhythmmod.useRandomColors": "Random Colors",
+  "config.rhythmmod.useRandomColors.tooltip.line1": "Use random rainbow colors instead of frequency-tuned colors",
+  "config.rhythmmod.useRandomColors.tooltip.line2": "Creates a dynamic disco effect with constantly changing colors",
+
+  "config.rhythmmod.coloredShaderLightEnabled": "Colored Glow Effect",
+  "config.rhythmmod.coloredShaderLightEnabled.tooltip.line1": "Enable colored glow lighting around rhythm blocks",
+  "config.rhythmmod.coloredShaderLightEnabled.tooltip.line2": "Disable for better performance or a cleaner visual style",
+
+  "config.rhythmmod.disableColorFlashing": "Disable Color Flashing",
+  "config.rhythmmod.disableColorFlashing.tooltip.line1": "Completely disable the colored light shader effect",
+  "config.rhythmmod.disableColorFlashing.tooltip.line2": "Clears all existing lights and prevents new ones from rendering",
+
+  "config.rhythmmod.lightIntensityMultiplier": "Light Intensity",
+  "config.rhythmmod.lightIntensityMultiplier.tooltip.line1": "Controls how bright the colored light glow appears",
+  "config.rhythmmod.lightIntensityMultiplier.tooltip.line2": "Higher values = brighter, more vibrant glow effect",
+
+  "config.rhythmmod.blockLightLevel": "Block Light Level",
+  "config.rhythmmod.blockLightLevel.tooltip.line1": "The vanilla light level emitted by rhythm blocks when lit",
+  "config.rhythmmod.blockLightLevel.tooltip.line2": "Affects how much the blocks illuminate nearby areas",
+
+  "config.rhythmmod.lightSoftGlow": "Soft Glow Effect",
+  "config.rhythmmod.lightSoftGlow.tooltip.line1": "Enable smooth, blurred glow effect for colored lights",
+  "config.rhythmmod.lightSoftGlow.tooltip.line2": "Creates natural-looking lights that blend with the environment",
+
+  "config.rhythmmod.lightGlowSize": "Glow Size",
+  "config.rhythmmod.lightGlowSize.tooltip.line1": "How large the glow appears around light sources",
+  "config.rhythmmod.lightGlowSize.tooltip.line2": "Higher values create a more spread out glow effect",
+
+  "config.rhythmmod.lightGlowSoftness": "Glow Softness",
+  "config.rhythmmod.lightGlowSoftness.tooltip.line1": "How smooth and blurred the glow edges appear",
+  "config.rhythmmod.lightGlowSoftness.tooltip.line2": "Higher values create softer, more diffuse edges",
+
+  "config.rhythmmod.category.audio": "Audio Settings",
+
+  "config.rhythmmod.spatialAudioEnabled": "Spatial Audio",
+  "config.rhythmmod.spatialAudioEnabled.tooltip": "Enable distance-based volume for jukeboxes",
+
+  "config.rhythmmod.maxAudioDistance": "Max Audio Distance",
+  "config.rhythmmod.maxAudioDistance.tooltip": "Maximum distance to hear jukebox audio (blocks)",
+
+  "config.rhythmmod.referenceDistance": "Reference Distance",
+  "config.rhythmmod.referenceDistance.tooltip": "Distance for full volume playback (blocks)",
+
+  "config.rhythmmod.rolloffFactor": "Rolloff Factor",
+  "config.rhythmmod.rolloffFactor.tooltip": "How quickly volume drops with distance",
+
+  "config.rhythmmod.autoplayEnabled": "Autoplay",
+  "config.rhythmmod.autoplayEnabled.tooltip": "Automatically start playback when ready",
+
+  "item.rhythmmod.rhythm_url_disc": "Rhythm URL Disc",
+  "item.rhythmmod.rhythm_url_disc.desc": "Custom URL Audio",
+  "item.rhythmmod.rhythm_url_disc.tooltip": "Play music from YouTube, SoundCloud, etc.",
+  "item.rhythmmod.rhythm_url_disc.tooltip.edit": "§eRight-click in air§7 to set URL",
+  "item.rhythmmod.rhythm_url_disc.tooltip.lock": "§eShift+Right-click§7 to toggle lock"
+}
+
+
+

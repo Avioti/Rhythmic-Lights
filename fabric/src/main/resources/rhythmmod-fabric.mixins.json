@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.rhythm.fabric.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "ContainerTooltipMixin",
+    "TooltipColorMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
+

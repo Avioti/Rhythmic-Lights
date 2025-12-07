@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/glass",
+  "textures": {
+    "all": "rhythmmod:block/rhythm_bulb_unlit"
+  }
+}
+

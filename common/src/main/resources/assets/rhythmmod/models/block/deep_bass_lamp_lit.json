@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "rhythmmod:block/deep_bass_lamp_lit"
+  }
+}
+

@@ -1,0 +1,12 @@
+{
+  "placeholder_sound": {
+    "sounds": [
+      {
+        "name": "fabric-sound-api-v1:empty",
+        "attenuation_distance": 64,
+        "stream": true
+      }
+    ]
+  }
+}
+

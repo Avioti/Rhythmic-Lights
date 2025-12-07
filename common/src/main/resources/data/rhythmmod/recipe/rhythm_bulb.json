@@ -1,0 +1,43 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "N": {
+      "item": "minecraft:note_block"
+    },
+    "R": {
+      "item": "minecraft:red_stained_glass_pane"
+    },
+    "O": {
+      "item": "minecraft:orange_stained_glass_pane"
+    },
+    "Y": {
+      "item": "minecraft:yellow_stained_glass_pane"
+    },
+    "G": {
+      "item": "minecraft:green_stained_glass_pane"
+    },
+    "B": {
+      "item": "minecraft:blue_stained_glass_pane"
+    },
+    "P": {
+      "item": "minecraft:purple_stained_glass_pane"
+    },
+    "M": {
+      "item": "minecraft:magenta_stained_glass_pane"
+    },
+    "C": {
+      "item": "minecraft:cyan_stained_glass_pane"
+    }
+  },
+  "pattern": [
+    "ROY",
+    "GNB",
+    "PMC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "rhythmmod:rhythm_bulb"
+  }
+}
+

@@ -1,0 +1,16 @@
+{
+  "values": [
+    "rhythmmod:sub_bass_lamp",
+    "rhythmmod:deep_bass_lamp",
+    "rhythmmod:bass_lamp",
+    "rhythmmod:low_mids_lamp",
+    "rhythmmod:mid_lows_lamp",
+    "rhythmmod:mids_lamp",
+    "rhythmmod:mid_highs_lamp",
+    "rhythmmod:high_mids_lamp",
+    "rhythmmod:highs_lamp",
+    "rhythmmod:very_highs_lamp",
+    "rhythmmod:ultra_lamp",
+    "rhythmmod:top_lamp"
+  ]
+}

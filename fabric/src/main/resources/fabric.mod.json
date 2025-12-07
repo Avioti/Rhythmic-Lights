@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "rhythmmod",
+  "version": "${version}",
+  "name": "RhythmicLights",
+  "description": "Audio-reactive lighting and visualization for Minecraft!",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/rhythmmod/textures/icon/RhythmicLights.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.rhythm.fabric.RhythmModFabric"
+    ],
+    "client": [
+      "com.rhythm.fabric.client.RhythmModFabricClient"
+    ],
+    "modmenu": [
+      "com.rhythm.fabric.RhythmModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "rhythmmod.mixins.json",
+    "rhythmmod-fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "architectury": ">=13.0.8",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

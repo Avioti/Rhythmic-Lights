@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "package": "com.rhythm.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "JukeboxBlockEntityMixin",
+    "LevelRendererMixin",
+    "ScreenBlurMixin",
+    "client.ModelBlockRendererMixin",
+    "client.JukeboxSoundMixin",
+    "client.MusicManagerMixin",
+    "client.SoundEngineMixin"
+  ],
+  "mixins": [
+    "ResultSlotMixin",
+    "JukeboxSongPlayerMixin",
+    "accessor.JukeboxSongPlayerAccessor",
+    "accessor.SoundEngineAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
