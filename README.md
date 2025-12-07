@@ -35,7 +35,7 @@ A Minecraft mod that brings **real-time audio visualization** to the game. Synch
 | 4 | Link lights to DJ Station with the Tuning Wand |
 | 5 | Insert a disc and enjoy the show |
 
-![Basic Setup Demo](https://github.com/Avioti/Rhythmic-Lights/blob/main/docs/guides/gifs/setup.gif)
+
 
 ### URL Discs
 | Step | Action |
@@ -45,7 +45,7 @@ A Minecraft mod that brings **real-time audio visualization** to the game. Synch
 | 3 | Click "Fetch Metadata" to get song info |
 | 4 | Save and insert into a jukebox |
 
-![URL Disc Setup](https://github.com/Avioti/Rhythmic-Lights/blob/main/docs/guides/gifs/enter-url.gif)
+
 
 ### Tuning Wand Controls
 | Action | Function |
@@ -127,5 +127,6 @@ It is the sole responsibility of each user to comply with applicable copyright l
 ## License
 
 GPL-3.0 License (with Apache 2.0 for FabricMC components) - see [LICENSE](LICENSE) for details.
+
 
 
