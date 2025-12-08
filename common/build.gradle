@@ -1,6 +1,7 @@
 architectury {
     common rootProject.enabled_platforms.split(',')
 }
+
 loom {
     accessWidenerPath = file("src/main/resources/rhythmicLights.accesswidener")
 }
@@ -19,7 +20,7 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    // TarsosDSP for audio analysis - implementation only, Fabric will bundle it
+    // TarsosDSP for audio analysis
     implementation 'be.tarsos.dsp:core:2.5'
     implementation 'be.tarsos.dsp:jvm:2.5'
 
@@ -36,8 +37,9 @@ dependencies {
 
     // JTransforms for FFT - MUST be implementation, not compileOnly!
     implementation 'com.github.wendykierp:JTransforms:3.1'
-    // MixinExtras for advanced mixin features (common - compile only)
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.2.0"))
+
+    // Apache Commons Codec for SHA256 hashing (URL -> filename)
+    implementation 'commons-codec:commons-codec:1.16.0'
 }
 
 
