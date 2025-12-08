@@ -92,7 +92,8 @@ public class SeekableAudioPlayer {
 
     // ==================== Constructor ====================
 
-    private SeekableAudioPlayer() {}
+    private SeekableAudioPlayer() {
+    }
 
     /**
      * Gets the singleton instance of the audio player.
@@ -157,10 +158,10 @@ public class SeekableAudioPlayer {
      * @param volume       base volume (0.0 - 1.0)
      */
     public void playFromPosition(BlockPos jukeboxPos, ResourceLocation soundEventId,
-                                  String customUrl, long seekToTicks, float volume) {
+                                 String customUrl, long seekToTicks, float volume) {
         if (RhythmConstants.DEBUG_AUDIO) {
             RhythmConstants.LOGGER.debug("playFromPosition: pos={}, seekTicks={}, volume={}",
-                jukeboxPos, seekToTicks, volume);
+                    jukeboxPos, seekToTicks, volume);
         }
 
         stop(jukeboxPos);
@@ -383,11 +384,11 @@ public class SeekableAudioPlayer {
         }
 
         float attenuation = referenceDistance /
-            (referenceDistance + rolloffFactor * (float)(distance - referenceDistance));
+                (referenceDistance + rolloffFactor * (float) (distance - referenceDistance));
 
         float fadeZone = maxDistance * FADE_ZONE_PERCENTAGE;
         if (distance > maxDistance - fadeZone) {
-            float fadeProgress = (float)(distance - (maxDistance - fadeZone)) / fadeZone;
+            float fadeProgress = (float) (distance - (maxDistance - fadeZone)) / fadeZone;
             attenuation *= (1.0f - fadeProgress);
         }
 
@@ -437,7 +438,7 @@ public class SeekableAudioPlayer {
             return distanceVolume;
         }
 
-        float priorityFactor = (float)(closestOtherDistance / distance);
+        float priorityFactor = (float) (closestOtherDistance / distance);
         priorityFactor = priorityFactor * priorityFactor;
 
         return distanceVolume * priorityFactor;
@@ -460,6 +461,14 @@ public class SeekableAudioPlayer {
 
     private static long ticksToMilliseconds(long ticks) {
         return (ticks * MS_PER_SECOND) / TICKS_PER_SECOND;
+    }
+
+    /**
+     * @return Minecraft's master volume (0.0 to 1.0)
+     */
+    private static float getMinecraftMasterVolume() {
+        Minecraft mc = Minecraft.getInstance();
+        return mc.options.getSoundSourceVolume(SoundSource.MASTER);
     }
 
     // ==================== Playback Session ====================
@@ -485,7 +494,7 @@ public class SeekableAudioPlayer {
         private final AudioQualityAnalyzer qualityAnalyzer = new AudioQualityAnalyzer();
 
         PlaybackSession(BlockPos jukeboxPos, ResourceLocation soundEventId,
-                       String customUrl, long seekToMs, float volume) {
+                        String customUrl, long seekToMs, float volume) {
             this.jukeboxPos = jukeboxPos;
             this.soundEventId = soundEventId;
             this.customUrl = customUrl;
@@ -585,9 +594,9 @@ public class SeekableAudioPlayer {
             float[] eq = qualityAnalyzer.getRecommendedEQ();
             RhythmConstants.LOGGER.debug("Auto-EQ applied for {} track:", profile.getDisplayName());
             RhythmConstants.LOGGER.debug("  32Hz:{} 64Hz:{} 125Hz:{} 250Hz:{} 500Hz:{}",
-                formatDb(eq[0]), formatDb(eq[1]), formatDb(eq[2]), formatDb(eq[3]), formatDb(eq[4]));
+                    formatDb(eq[0]), formatDb(eq[1]), formatDb(eq[2]), formatDb(eq[3]), formatDb(eq[4]));
             RhythmConstants.LOGGER.debug("  1kHz:{} 2kHz:{} 4kHz:{} 8kHz:{} 16kHz:{}",
-                formatDb(eq[5]), formatDb(eq[6]), formatDb(eq[7]), formatDb(eq[8]), formatDb(eq[9]));
+                    formatDb(eq[5]), formatDb(eq[6]), formatDb(eq[7]), formatDb(eq[8]), formatDb(eq[9]));
         }
 
         private String formatDb(float db) {
@@ -598,7 +607,7 @@ public class SeekableAudioPlayer {
             if (RhythmConstants.DEBUG_AUDIO) {
                 RhythmConstants.LOGGER.debug("Looking for cached PCM with key: {}", cacheKey);
                 RhythmConstants.LOGGER.debug("  soundEventId: {}, customUrl: {}, seekToMs: {}",
-                    soundEventId, customUrl != null ? customUrl : "(null)", seekToMs);
+                        soundEventId, customUrl != null ? customUrl : "(null)", seekToMs);
             }
         }
 
@@ -609,8 +618,8 @@ public class SeekableAudioPlayer {
         private void logCacheState() {
             if (RhythmConstants.DEBUG_AUDIO) {
                 RhythmConstants.LOGGER.debug("Cache size: {} entries, {} bytes",
-                    AudioPcmCache.getInstance().getEntryCount(),
-                    AudioPcmCache.getInstance().getCacheSize());
+                        AudioPcmCache.getInstance().getEntryCount(),
+                        AudioPcmCache.getInstance().getCacheSize());
                 AudioPcmCache.getInstance().debugPrintCacheKeys();
             }
         }
@@ -640,8 +649,8 @@ public class SeekableAudioPlayer {
             logAudioFormat("Source", sourceFormat);
 
             AudioFormat pcmFormat = AudioDecoder.buildPcmFormat(
-                sourceFormat.getSampleRate(),
-                sourceFormat.getChannels()
+                    sourceFormat.getSampleRate(),
+                    sourceFormat.getChannels()
             );
 
             AudioInputStream pcmStream = convertToPcmIfNeeded(audioInputStream, sourceFormat, pcmFormat);
@@ -677,8 +686,8 @@ public class SeekableAudioPlayer {
         }
 
         private AudioInputStream convertToPcmIfNeeded(AudioInputStream source,
-                                                       AudioFormat sourceFormat,
-                                                       AudioFormat pcmFormat) {
+                                                      AudioFormat sourceFormat,
+                                                      AudioFormat pcmFormat) {
             if (sourceFormat.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED)) {
                 if (RhythmConstants.DEBUG_AUDIO) {
                     RhythmConstants.LOGGER.debug("Already PCM format, no conversion needed");
@@ -719,51 +728,26 @@ public class SeekableAudioPlayer {
             }
 
             byte[] workBuffer = new byte[bufferSize];
-            executePlaybackLoop(pcmData, pcmFormat, startPosition, workBuffer, bufferSize, frameSize, channels);
+            executePlaybackLoop(pcmData, startPosition, workBuffer, bufferSize, frameSize, channels);
 
             finishPlayback();
         }
 
-        private void executePlaybackLoop(byte[] pcmData, AudioFormat pcmFormat, int startPosition,
-                                          byte[] workBuffer, int bufferSize, int frameSize, int channels) {
-            int playbackLoopCount = 0;
+        private void executePlaybackLoop(byte[] pcmData, int startPosition,
+                                         byte[] workBuffer, int bufferSize, int frameSize, int channels) {
+            int loopIteration = 0;
             boolean shouldLoop;
 
             do {
-                int currentPosition = (playbackLoopCount == 0) ? startPosition : 0;
-                int bufferLoopCount = 0;
+                int currentPosition = (loopIteration == 0) ? startPosition : 0;
 
-                shouldLoop = ClientSongManager.getInstance().isLoopEnabled(jukeboxPos);
-
-                if (playbackLoopCount > 0) {
-                    handleLoopRestart(playbackLoopCount);
+                if (loopIteration > 0) {
+                    handleLoopRestart(loopIteration);
                 }
 
-                while (!isStopRequested && currentPosition < pcmData.length) {
-                    if (isGamePaused && !waitWhilePaused()) {
-                        break;
-                    }
+                processBufferLoop(pcmData, workBuffer, bufferSize, frameSize, channels, currentPosition);
 
-                    updateDistanceBasedVolume();
-
-                    int bytesToWrite = Math.min(bufferSize, pcmData.length - currentPosition);
-                    bytesToWrite = alignToFrameBoundary(bytesToWrite, frameSize);
-
-                    if (bytesToWrite <= 0) {
-                        break;
-                    }
-
-                    if (bufferLoopCount % VOLUME_LOG_INTERVAL == 0 && RhythmConstants.DEBUG_AUDIO) {
-                        RhythmConstants.LOGGER.debug("Playback buffer #{}: currentVolume={}, position={}",
-                            bufferLoopCount, currentVolume, currentPosition);
-                    }
-                    bufferLoopCount++;
-
-                    processAndWriteAudio(pcmData, currentPosition, bytesToWrite, workBuffer, channels);
-                    currentPosition += bytesToWrite;
-                }
-
-                playbackLoopCount++;
+                loopIteration++;
                 shouldLoop = ClientSongManager.getInstance().isLoopEnabled(jukeboxPos);
 
             } while (shouldLoop && !isStopRequested && ClientSongManager.getInstance().isPlaying(jukeboxPos));
@@ -771,11 +755,49 @@ public class SeekableAudioPlayer {
             logPlaybackCompletion(shouldLoop);
         }
 
-        private void handleLoopRestart(int loopCount) {
+        private void processBufferLoop(byte[] pcmData, byte[] workBuffer, int bufferSize,
+                                       int frameSize, int channels, int startPosition) {
+            int bufferIteration = 0;
+            int currentPosition = startPosition;
+
+            while (!isStopRequested && currentPosition < pcmData.length) {
+                if (isGamePaused && !waitWhilePaused()) {
+                    break;
+                }
+
+                updateDistanceBasedVolume();
+
+                int bytesToWrite = Math.min(bufferSize, pcmData.length - currentPosition);
+                bytesToWrite = alignToFrameBoundary(bytesToWrite, frameSize);
+
+                if (bytesToWrite <= 0) {
+                    break;
+                }
+
+                logBufferProgress(bufferIteration, currentPosition);
+                bufferIteration++;
+
+                processAndWriteAudio(pcmData, currentPosition, bytesToWrite, workBuffer, channels);
+                currentPosition += bytesToWrite;
+            }
+        }
+
+        private void logBufferProgress(int bufferIteration, int currentPosition) {
+            if (bufferIteration % VOLUME_LOG_INTERVAL == 0 && RhythmConstants.DEBUG_AUDIO) {
+                RhythmConstants.LOGGER.debug("Playback buffer #{}: currentVolume={}, position={}",
+                        bufferIteration, currentVolume, currentPosition);
+            }
+        }
+
+        private void handleLoopRestart(int loopIteration) {
             if (RhythmConstants.DEBUG_AUDIO) {
-                RhythmConstants.LOGGER.debug("Restarting playback (loop #{}) at {}", loopCount, jukeboxPos);
+                RhythmConstants.LOGGER.debug("Restarting playback (loop #{}) at {}", loopIteration, jukeboxPos);
             }
 
+            resetPlaybackStartTime();
+        }
+
+        private void resetPlaybackStartTime() {
             try {
                 Minecraft mc = Minecraft.getInstance();
                 if (mc.level != null) {
@@ -790,12 +812,12 @@ public class SeekableAudioPlayer {
             }
         }
 
-        private void logPlaybackCompletion(boolean wasLooping) {
-            if (wasLooping && isStopRequested) {
+        private void logPlaybackCompletion(boolean isLooping) {
+            if (isLooping && isStopRequested) {
                 if (RhythmConstants.DEBUG_AUDIO) {
                     RhythmConstants.LOGGER.debug("Loop playback stopped by user at {}", jukeboxPos);
                 }
-            } else if (!wasLooping && RhythmConstants.DEBUG_AUDIO) {
+            } else if (!isLooping && RhythmConstants.DEBUG_AUDIO) {
                 RhythmConstants.LOGGER.debug("Playback finished (no loop) at {}", jukeboxPos);
             }
         }
@@ -805,19 +827,19 @@ public class SeekableAudioPlayer {
             int frameSize = format.getFrameSize();
 
             if (RhythmConstants.DEBUG_AUDIO) {
-                double audioDurationMs = (dataLength / (double)(sampleRate * frameSize)) * MS_PER_SECOND;
+                double audioDurationMs = (dataLength / (double) (sampleRate * frameSize)) * MS_PER_SECOND;
                 RhythmConstants.LOGGER.debug("Seek calculation: seekToMs={}, sampleRate={}, frameSize={}, dataLength={} bytes",
-                    seekToMs, sampleRate, frameSize, dataLength);
+                        seekToMs, sampleRate, frameSize, dataLength);
                 RhythmConstants.LOGGER.debug("Audio duration: {} ms ({} seconds)",
-                    audioDurationMs, audioDurationMs / MS_PER_SECOND);
+                        audioDurationMs, audioDurationMs / MS_PER_SECOND);
             }
 
-            long bytesToSkip = (long) ((seekToMs / (double)MS_PER_SECOND) * sampleRate * frameSize);
+            long bytesToSkip = (long) ((seekToMs / (double) MS_PER_SECOND) * sampleRate * frameSize);
             bytesToSkip = alignToFrameBoundary(bytesToSkip, frameSize);
 
             if (bytesToSkip >= dataLength) {
                 RhythmConstants.LOGGER.warn("Seek position {} exceeds audio length {}, starting from beginning",
-                    bytesToSkip, dataLength);
+                        bytesToSkip, dataLength);
                 bytesToSkip = 0;
             }
 
@@ -871,17 +893,19 @@ public class SeekableAudioPlayer {
             System.arraycopy(pcmData, position, workBuffer, 0, length);
 
             AudioSettings settings = AudioSettings.getInstance();
-            float userMasterVolume = settings.getMasterVolume();
-            float effectiveVolume = currentVolume * userMasterVolume;
+            float savedMasterVolume = settings.getMasterVolume();
+            float effectiveVolume = calculateEffectiveVolume(savedMasterVolume);
 
-            float originalMasterVolume = settings.getMasterVolume();
             settings.setMasterVolume(effectiveVolume);
-
             audioProcessor.process(workBuffer, 0, length, channels);
-
-            settings.setMasterVolume(originalMasterVolume);
+            settings.setMasterVolume(savedMasterVolume);
 
             audioLine.write(workBuffer, 0, length);
+        }
+
+        private float calculateEffectiveVolume(float djScreenVolume) {
+            float mcMasterVolume = getMinecraftMasterVolume();
+            return mcMasterVolume * djScreenVolume * currentVolume;
         }
 
         private void finishPlayback() {
@@ -936,7 +960,7 @@ public class SeekableAudioPlayer {
         private void logAudioFormat(String label, AudioFormat format) {
             if (RhythmConstants.DEBUG_AUDIO) {
                 RhythmConstants.LOGGER.debug("{} format: {}, {}Hz, {} channels",
-                    label, format.getEncoding(), format.getSampleRate(), format.getChannels());
+                        label, format.getEncoding(), format.getSampleRate(), format.getChannels());
             }
         }
 
