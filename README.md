@@ -128,7 +128,9 @@ It is the sole responsibility of each user to comply with applicable copyright l
 
 <div><h2>License</h2></div>
 
-GPL-3.0 License (with Apache 2.0 for FabricMC components) - see [LICENSE](https://github.com/Avioti/Rhythmic-Lights/blob/main/LICENSE) for details.
+Creative Commons Zero v1.0 Universal (CC0 1.0)
+Full text: https://creativecommons.org/publicdomain/zero/1.0/
+
 
 
 
