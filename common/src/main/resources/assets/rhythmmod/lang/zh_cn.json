@@ -1,0 +1,134 @@
+{
+  "itemGroup.rhythmmod.main": "节奏模组",
+
+  "block.rhythmmod.rhythm_controller": "DJ工作站",
+  "block.rhythmmod.rhythm_bulb": "节奏灯球",
+  "block.rhythmmod.ghost_rhythm_bulb": "幽灵节奏灯球",
+
+  "item.rhythmmod.dj_station.tooltip.1": "连接至唱片机以实现音乐可视化",
+  "item.rhythmmod.dj_station.tooltip.2": "只有所有者可以控制此工作站",
+  "item.rhythmmod.dj_station.tooltip.claim": "使用音叉Shift+右键点击以认领",
+  "item.rhythmmod.dj_station.owner": "§7所有者：§b%s",
+
+  "block.rhythmmod.sub_bass_lamp": "红色红石灯",
+  "block.rhythmmod.sub_bass_lamp.tooltip": "§7频率：§c超低音 (20-60 Hz)",
+  "block.rhythmmod.deep_bass_lamp": "橙色红石灯",
+  "block.rhythmmod.deep_bass_lamp.tooltip": "§7频率：§6深沉低音 (60-100 Hz)",
+  "block.rhythmmod.bass_lamp": "黄绿色红石灯",
+  "block.rhythmmod.bass_lamp.tooltip": "§7频率：§a低音 (100-200 Hz)",
+  "block.rhythmmod.low_mids_lamp": "蓝色红石灯",
+  "block.rhythmmod.low_mids_lamp.tooltip": "§7频率：§9中低音 (200-400 Hz)",
+  "block.rhythmmod.mid_lows_lamp": "白色红石灯",
+  "block.rhythmmod.mid_lows_lamp.tooltip": "§7频率：§f中偏低音 (400-600 Hz)",
+  "block.rhythmmod.mids_lamp": "紫色红石灯",
+  "block.rhythmmod.mids_lamp.tooltip": "§7频率：§5中音 (600-1000 Hz)",
+  "block.rhythmmod.mid_highs_lamp": "粉色红石灯",
+  "block.rhythmmod.mid_highs_lamp.tooltip": "§7频率：§d中高音 (1-2 kHz)",
+  "block.rhythmmod.high_mids_lamp": "黄色红石灯",
+  "block.rhythmmod.high_mids_lamp.tooltip": "§7频率：§e高音中段 (2-4 kHz)",
+  "block.rhythmmod.highs_lamp": "青色红石灯",
+  "block.rhythmmod.highs_lamp.tooltip": "§7频率：§b高音 (4-8 kHz)",
+  "block.rhythmmod.very_highs_lamp": "品红色红石灯",
+  "block.rhythmmod.very_highs_lamp.tooltip": "§7频率：§d极高音 (8-12 kHz)",
+  "block.rhythmmod.ultra_lamp": "金色红石灯",
+  "block.rhythmmod.ultra_lamp.tooltip": "§7频率：§6超高音 (12-16 kHz)",
+  "block.rhythmmod.top_lamp": "银色红石灯",
+  "block.rhythmmod.top_lamp.tooltip": "§7频率：§7顶音 (16-20 kHz)",
+
+  "block.rhythmmod.copper_rhythm_bulb": "铜制节奏灯球",
+  "block.rhythmmod.exposed_copper_rhythm_bulb": "斑驳铜制节奏灯球",
+  "block.rhythmmod.weathered_copper_rhythm_bulb": "锈蚀铜制节奏灯球",
+  "block.rhythmmod.oxidized_copper_rhythm_bulb": "氧化铜制节奏灯球",
+
+  "item.rhythmmod.tuning_wand": "音叉",
+
+  "item.rhythmmod.tuning_wand.tooltip.header": "链接与配置节奏组件",
+  "item.rhythmmod.tuning_wand.tooltip.store": "§eShift+右键点击§7工作站以认领并存储",
+  "item.rhythmmod.tuning_wand.tooltip.link_jukebox": "§e右键点击§7唱片机以链接",
+  "item.rhythmmod.tuning_wand.tooltip.link_bulb": "§e右键点击§7灯球/灯以链接",
+  "item.rhythmmod.tuning_wand.tooltip.channel": "§eShift+右键点击§7灯球以切换频道",
+  "item.rhythmmod.tuning_wand.tooltip.unlink_controller": "§eCtrl+右键点击§7工作站以取消链接唱片机",
+  "item.rhythmmod.tuning_wand.tooltip.unlink_bulb": "§eCtrl+右键点击§7灯球/灯以取消链接",
+
+  "frequency.rhythmmod.sub_bass": "超低音 (20-60 Hz)",
+  "frequency.rhythmmod.deep_bass": "深沉低音 (60-100 Hz)",
+  "frequency.rhythmmod.bass": "低音 (100-200 Hz)",
+  "frequency.rhythmmod.low_mids": "中低音 (200-400 Hz)",
+  "frequency.rhythmmod.mid_lows": "中偏低音 (400-600 Hz)",
+  "frequency.rhythmmod.mids": "中音 (600-1000 Hz)",
+  "frequency.rhythmmod.mid_highs": "中高音 (1-2 kHz)",
+  "frequency.rhythmmod.high_mids": "高音中段 (2-4 kHz)",
+  "frequency.rhythmmod.highs": "高音 (4-8 kHz)",
+  "frequency.rhythmmod.very_highs": "极高音 (8-12 kHz)",
+  "frequency.rhythmmod.ultra": "超高音 (12-16 kHz)",
+  "frequency.rhythmmod.top": "顶音 (16-20 kHz)",
+  "frequency.rhythmmod.all": "所有频率",
+
+  "config.rhythmmod.title": "节奏模组配置",
+
+  "config.rhythmmod.category.visual": "视觉效果",
+
+  "config.rhythmmod.particleTexture": "粒子纹理",
+  "config.rhythmmod.particleTexture.tooltip.line1": "为节奏灯和灯球选择粒子效果",
+  "config.rhythmmod.particleTexture.tooltip.line2": "粒子颜色会自动匹配每个频段",
+  "config.rhythmmod.particleTexture.tooltip.line3": "尝试不同的纹理，找到你最喜欢的视觉风格！",
+
+  "config.rhythmmod.particleScale": "粒子尺寸",
+  "config.rhythmmod.particleScale.tooltip.line1": "控制粒子显示的大小",
+  "config.rhythmmod.particleScale.tooltip.line2": "更小=更好的性能，更大=更戏剧化的效果",
+
+  "config.rhythmmod.useRandomColors": "随机颜色",
+  "config.rhythmmod.useRandomColors.tooltip.line1": "使用随机的彩虹色代替频率调谐色",
+  "config.rhythmmod.useRandomColors.tooltip.line2": "创造动态的迪斯科效果，颜色不断变化",
+
+  "config.rhythmmod.coloredShaderLightEnabled": "彩色发光效果",
+  "config.rhythmmod.coloredShaderLightEnabled.tooltip.line1": "启用节奏方块周围的彩色发光照明",
+  "config.rhythmmod.coloredShaderLightEnabled.tooltip.line2": "禁用以获得更好的性能或更简洁的视觉风格",
+
+  "config.rhythmmod.disableColorFlashing": "禁用颜色闪烁",
+  "config.rhythmmod.disableColorFlashing.tooltip.line1": "完全禁用彩色光影效果",
+  "config.rhythmmod.disableColorFlashing.tooltip.line2": "清除所有现有灯光并阻止渲染新灯光",
+
+  "config.rhythmmod.lightIntensityMultiplier": "光照强度",
+  "config.rhythmmod.lightIntensityMultiplier.tooltip.line1": "控制彩色发光效果的亮度",
+  "config.rhythmmod.lightIntensityMultiplier.tooltip.line2": "值越高=越明亮，发光效果越鲜艳",
+
+  "config.rhythmmod.blockLightLevel": "方块光照等级",
+  "config.rhythmmod.blockLightLevel.tooltip.line1": "节奏方块点亮时发出的原版光照等级",
+  "config.rhythmmod.blockLightLevel.tooltip.line2": "影响方块照亮附近区域的程度",
+
+  "config.rhythmmod.lightSoftGlow": "柔和发光效果",
+  "config.rhythmmod.lightSoftGlow.tooltip.line1": "启用彩色灯光的平滑、模糊发光效果",
+  "config.rhythmmod.lightSoftGlow.tooltip.line2": "创造自然光效，与环境融合",
+
+  "config.rhythmmod.lightGlowSize": "发光尺寸",
+  "config.rhythmmod.lightGlowSize.tooltip.line1": "光源周围发光区域的大小",
+  "config.rhythmmod.lightGlowSize.tooltip.line2": "更高的值创造更分散的发光效果",
+
+  "config.rhythmmod.lightGlowSoftness": "发光柔和度",
+  "config.rhythmmod.lightGlowSoftness.tooltip.line1": "发光边缘的平滑和模糊程度",
+  "config.rhythmmod.lightGlowSoftness.tooltip.line2": "更高的值创造更柔和、更弥散的边缘",
+
+  "config.rhythmmod.category.audio": "音频设置",
+
+  "config.rhythmmod.spatialAudioEnabled": "空间音频",
+  "config.rhythmmod.spatialAudioEnabled.tooltip": "为唱片机启用基于距离的音量控制",
+
+  "config.rhythmmod.maxAudioDistance": "最大音频距离",
+  "config.rhythmmod.maxAudioDistance.tooltip": "可听到唱片机音频的最远距离（方块）",
+
+  "config.rhythmmod.referenceDistance": "参考距离",
+  "config.rhythmmod.referenceDistance.tooltip": "全音量播放的距离（方块）",
+
+  "config.rhythmmod.rolloffFactor": "衰减因子",
+  "config.rhythmmod.rolloffFactor.tooltip": "音量随距离下降的速度",
+
+  "config.rhythmmod.autoplayEnabled": "自动播放",
+  "config.rhythmmod.autoplayEnabled.tooltip": "准备就绪时自动开始播放",
+
+  "item.rhythmmod.rhythm_url_disc": "节奏URL唱片",
+  "item.rhythmmod.rhythm_url_disc.desc": "自定义URL音频",
+  "item.rhythmmod.rhythm_url_disc.tooltip": "播放来自YouTube、SoundCloud等的音乐",
+  "item.rhythmmod.rhythm_url_disc.tooltip.edit": "§e在空中右键点击§7以设置URL",
+  "item.rhythmmod.rhythm_url_disc.tooltip.lock": "§eShift+右键点击§7以切换锁定"
+}
