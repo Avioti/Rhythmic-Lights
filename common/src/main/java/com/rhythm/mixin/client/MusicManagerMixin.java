@@ -1,6 +1,6 @@
 package com.rhythm.mixin.client;
 
-import com.rhythm.audio.SeekableAudioPlayer;
+import com.rhythm.audio.playback.SeekableAudioPlayer;
 import net.minecraft.client.sounds.MusicManager;
 import net.minecraft.sounds.Music;
 import org.spongepowered.asm.mixin.Mixin;

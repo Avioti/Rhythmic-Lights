@@ -1,5 +1,6 @@
 package com.rhythm.config;
 
+import com.rhythm.audio.playback.SeekableAudioPlayer;
 import com.rhythm.config.annotation.ConfigComment;
 import com.rhythm.config.annotation.SyncToClient;
 
@@ -403,7 +404,7 @@ public class RhythmConfig {
      */
     public void applyAudioSettings() {
         com.rhythm.audio.AudioSettings audioSettings = com.rhythm.audio.AudioSettings.getInstance();
-        com.rhythm.audio.SeekableAudioPlayer audioPlayer = com.rhythm.audio.SeekableAudioPlayer.getInstance();
+        SeekableAudioPlayer audioPlayer = SeekableAudioPlayer.getInstance();
 
         // Apply spatial audio settings
         audioSettings.setMaxAudioDistance(getMaxAudioDistance());

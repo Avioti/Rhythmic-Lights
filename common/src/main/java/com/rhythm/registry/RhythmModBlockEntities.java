@@ -1,8 +1,8 @@
 package com.rhythm.registry;
 
 import com.rhythm.RhythmMod;
-import com.rhythm.block.RhythmBulbBlockEntity;
-import com.rhythm.block.RhythmControllerBlockEntity;
+import com.rhythm.block.bulbs.RhythmBulbBlockEntity;
+import com.rhythm.block.controller.RhythmControllerBlockEntity;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;

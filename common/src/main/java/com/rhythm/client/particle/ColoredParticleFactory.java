@@ -98,27 +98,13 @@ public class ColoredParticleFactory implements ParticleProvider<ColoredParticleE
         @SuppressWarnings("unchecked")
         Map<ResourceLocation, SpriteSet> spriteSets = (Map<ResourceLocation, SpriteSet>) spriteSetsField.get(engine);
 
-        ResourceLocation particleId = parseParticleId(particleName);
-        SpriteSet spriteSet = spriteSets.get(particleId);
+        SpriteSet spriteSet = spriteSets.get(ResourceLocation.withDefaultNamespace(particleName));
 
-        // Fallback to rhythmmod namespace if not found
-        if (spriteSet == null && !particleName.contains(":")) {
+        if (spriteSet == null) {
             spriteSet = spriteSets.get(ResourceLocation.fromNamespaceAndPath(RHYTHMMOD_NAMESPACE, particleName));
         }
 
         return spriteSet;
-    }
-
-    /**
-     * Parses a particle name into a ResourceLocation.
-     * Supports formats: "particle_name" (defaults to minecraft) or "modid:particle_name"
-     */
-    private static ResourceLocation parseParticleId(String particleName) {
-        if (particleName.contains(":")) {
-            String[] parts = particleName.split(":", 2);
-            return ResourceLocation.fromNamespaceAndPath(parts[0], parts[1]);
-        }
-        return ResourceLocation.withDefaultNamespace(particleName);
     }
 
     // ==================== Colored Particle ====================

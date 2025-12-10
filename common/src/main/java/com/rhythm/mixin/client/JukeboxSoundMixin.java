@@ -1,6 +1,6 @@
 package com.rhythm.mixin.client;
 
-import com.rhythm.audio.LinkedJukeboxRegistry;
+import com.rhythm.audio.state.LinkedJukeboxRegistry;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;

@@ -1,8 +1,8 @@
 package com.rhythm.item;
 
 import com.rhythm.audio.FrequencyChannel;
-import com.rhythm.block.RhythmBulbBlockEntity;
-import com.rhythm.block.RhythmControllerBlockEntity;
+import com.rhythm.block.bulbs.RhythmBulbBlockEntity;
+import com.rhythm.block.controller.RhythmControllerBlockEntity;
 import com.rhythm.client.gui.RGBText;
 import com.rhythm.network.OpenDJControllerPacket;
 import com.rhythm.network.PacketSender;

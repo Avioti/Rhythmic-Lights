@@ -1,8 +1,8 @@
 package com.rhythm.client.gui;
 
 import com.rhythm.audio.AudioSettings;
-import com.rhythm.audio.ClientSongManager;
-import com.rhythm.audio.PlaybackState;
+import com.rhythm.audio.state.ClientSongManager;
+import com.rhythm.audio.state.PlaybackState;
 import com.rhythm.client.gui.widget.ImageButton;
 import com.rhythm.client.gui.widget.TextButton;
 import com.rhythm.client.gui.widget.ToggleButton;

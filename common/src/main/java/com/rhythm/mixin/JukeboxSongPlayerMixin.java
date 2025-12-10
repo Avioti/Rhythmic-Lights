@@ -1,8 +1,8 @@
 package com.rhythm.mixin;
 
-import com.rhythm.audio.LinkedJukeboxRegistry;
-import com.rhythm.audio.PlaybackState;
-import com.rhythm.audio.ServerPlaybackTracker;
+import com.rhythm.audio.state.LinkedJukeboxRegistry;
+import com.rhythm.audio.state.PlaybackState;
+import com.rhythm.audio.state.ServerPlaybackTracker;
 import com.rhythm.util.RhythmConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

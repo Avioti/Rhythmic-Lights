@@ -1,10 +1,10 @@
 package com.rhythm.network;
 
 import com.rhythm.RhythmMod;
-import com.rhythm.audio.LinkedJukeboxRegistry;
-import com.rhythm.audio.PlaybackState;
-import com.rhythm.audio.ServerPlaybackTracker;
-import com.rhythm.block.RhythmControllerBlockEntity;
+import com.rhythm.audio.state.LinkedJukeboxRegistry;
+import com.rhythm.audio.state.PlaybackState;
+import com.rhythm.audio.state.ServerPlaybackTracker;
+import com.rhythm.block.controller.RhythmControllerBlockEntity;
 import com.rhythm.util.RhythmConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

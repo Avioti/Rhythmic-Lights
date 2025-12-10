@@ -1,6 +1,5 @@
 package com.rhythm.fabric.client;
 
-import com.rhythm.block.RhythmBulbBlockEntity;
 import com.rhythm.client.light.ColoredLightPipeline;
 import com.rhythm.client.particle.ColoredParticleFactory;
 import com.rhythm.client.renderer.RhythmBulbRenderer;

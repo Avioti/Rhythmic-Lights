@@ -11,11 +11,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 
 import java.net.URI;
-import java.util.stream.Stream;
 
 /**
  * Client -> Server packet to set URL data on a RhythmURL disc.
@@ -76,7 +74,7 @@ public record SetURLDataPacket(
     // ==================== Server Handler ====================
 
     public void handleOnServer(ServerPlayer player) {
-        ItemStack stack = findUrlDiscInHand(player);
+        ItemStack stack = RhythmURLDisc.findInPlayerHand(player);
 
         if (stack == null) {
             sendError(player, MSG_NO_DISC);
@@ -94,13 +92,6 @@ public record SetURLDataPacket(
 
     // ==================== Helpers ====================
 
-    private ItemStack findUrlDiscInHand(ServerPlayer player) {
-        return Stream.of(InteractionHand.values())
-            .map(player::getItemInHand)
-            .filter(s -> s.getItem() instanceof RhythmURLDisc)
-            .findFirst()
-            .orElse(null);
-    }
 
     private String validateUrl(ServerPlayer player) {
         try {

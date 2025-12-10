@@ -1,7 +1,7 @@
 package com.rhythm.fabric.client;
 
-import com.rhythm.audio.ClientSongManager;
-import com.rhythm.audio.SeekableAudioPlayer;
+import com.rhythm.audio.state.ClientSongManager;
+import com.rhythm.audio.playback.SeekableAudioPlayer;
 import com.rhythm.client.gui.DownloadProgressOverlay;
 import com.rhythm.client.gui.LoadingOverlay;
 import com.rhythm.client.gui.RGBText;

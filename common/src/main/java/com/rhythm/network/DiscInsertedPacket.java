@@ -1,13 +1,12 @@
 package com.rhythm.network;
 
 import com.rhythm.RhythmMod;
-import com.rhythm.audio.AudioPreComputer;
+import com.rhythm.audio.analysis.AudioPreComputer;
 import com.rhythm.audio.AudioSettings;
-import com.rhythm.audio.ClientSongManager;
-import com.rhythm.audio.FrequencyData;
-import com.rhythm.audio.PlaybackState;
-import com.rhythm.audio.RhythmSoundManager;
-import com.rhythm.audio.executable.RhythmExecutable;
+import com.rhythm.audio.state.ClientSongManager;
+import com.rhythm.audio.analysis.FrequencyData;
+import com.rhythm.audio.state.PlaybackState;
+import com.rhythm.audio.io.RhythmSoundManager;
 import com.rhythm.client.gui.DownloadProgressOverlay;
 import com.rhythm.util.RhythmConstants;
 import net.minecraft.core.BlockPos;
@@ -17,9 +16,6 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 import java.io.File;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Server -> Client packet when a disc is inserted into a jukebox.
@@ -37,14 +33,7 @@ public record DiscInsertedPacket(
 
     // ==================== Constants ====================
 
-    private static final String[] STREAMING_DOMAINS = {"youtube.com", "youtu.be", "spotify.com", "soundcloud.com"};
-    private static final String DOWNLOAD_PROCESS_SUFFIX = "/download";
-    private static final String FFT_SUBSCRIBER_PREFIX = "fft-";
-
-    private static final int DOWNLOAD_TIMEOUT_MINUTES = 5;
     private static final int POST_DOWNLOAD_DELAY_MS = 500;
-    private static final int FILE_CHECK_INTERVAL_MS = 1000;
-    private static final int FILE_STABLE_COUNT_REQUIRED = 3;
     private static final int INITIAL_FREQUENCY_DATA_TICKS = 0;
 
     // ==================== Callbacks (set by client module) ====================
@@ -52,25 +41,54 @@ public record DiscInsertedPacket(
     private static LoadingCallback loadingCallback = null;
     private static ClientPacketSender packetSender = null;
 
+    /**
+     * Callback interface for tracking disc loading progress.
+     * Set by the client module to receive loading state updates.
+     */
     public interface LoadingCallback {
+        /** Called when FFT loading begins for a disc. */
         void onLoadingStart(BlockPos pos, ResourceLocation soundId, String songTitle);
+
+        /** Called periodically with loading progress (0.0 to 1.0). */
         void onLoadingProgress(BlockPos pos, float progress);
+
+        /** Called when FFT loading completes successfully. */
         void onLoadingComplete(BlockPos pos);
+
+        /** Called when FFT loading fails. */
         void onLoadingFailed(BlockPos pos);
     }
 
+    /**
+     * Interface for sending packets to the server from the client module.
+     */
     public interface ClientPacketSender {
         void sendToServer(CustomPacketPayload payload);
     }
 
+    /**
+     * Sets the loading callback for receiving disc loading state updates.
+     *
+     * @param callback the callback implementation
+     */
     public static void setLoadingCallback(LoadingCallback callback) {
         loadingCallback = callback;
     }
 
+    /**
+     * Gets the current loading callback.
+     *
+     * @return the loading callback, or null if not set
+     */
     public static LoadingCallback getLoadingCallback() {
         return loadingCallback;
     }
 
+    /**
+     * Sets the packet sender for client-to-server communication.
+     *
+     * @param sender the packet sender implementation
+     */
     public static void setPacketSender(ClientPacketSender sender) {
         packetSender = sender;
     }
@@ -121,16 +139,30 @@ public record DiscInsertedPacket(
         return TYPE;
     }
 
+    /**
+     * Checks if this packet contains a custom URL for streaming audio.
+     *
+     * @return true if a custom URL is present
+     */
     public boolean hasCustomUrl() {
         return customUrl != null && !customUrl.isEmpty();
     }
 
+    /**
+     * Checks if this packet contains a song title.
+     *
+     * @return true if a song title is present
+     */
     public boolean hasSongTitle() {
         return songTitle != null && !songTitle.isEmpty();
     }
 
     // ==================== Client Handler ====================
 
+    /**
+     * Handles this packet on the client side.
+     * Initializes client state and begins FFT processing for the inserted disc.
+     */
     public void handle() {
         logDebug("========== DISC INSERTED ==========");
         logDebug("Position: {} | Sound: {} | SongID: {} | URL: {} | Title: {} | Loop: {}",
@@ -172,7 +204,7 @@ public record DiscInsertedPacket(
     }
 
     private void processCustomUrl() {
-        if (isStreamingUrl(customUrl)) {
+        if (RhythmConstants.isStreamingUrl(customUrl)) {
             processStreamingUrl();
         } else {
             logDebug("Direct audio URL - starting FFT...");
@@ -186,10 +218,6 @@ public record DiscInsertedPacket(
             .thenAccept(freqData -> onFFTComplete(freqData, pos, songId));
     }
 
-    private boolean isStreamingUrl(String url) {
-        return java.util.Arrays.stream(STREAMING_DOMAINS)
-            .anyMatch(url::contains);
-    }
 
     // ==================== Streaming URL Handling ====================
 
@@ -198,7 +226,7 @@ public record DiscInsertedPacket(
 
         String fileName = RhythmSoundManager.getFileName(customUrl);
         File audioFile = RhythmSoundManager.getAudioFile(fileName);
-        boolean isDownloading = RhythmExecutable.YT_DLP.isProcessRunning(fileName + DOWNLOAD_PROCESS_SUFFIX);
+        boolean isDownloading = RhythmSoundManager.isDownloading(fileName);
 
         if (audioFile.exists() && !isDownloading) {
             processCachedFile(audioFile);
@@ -232,22 +260,41 @@ public record DiscInsertedPacket(
 
     private void waitForDownloadCompletion(String fileName, File audioFile,
                                             BlockPos targetPos, long targetSongId) {
-        CompletableFuture.runAsync(() ->
-            processDownloadResult(fileName, audioFile, targetPos, targetSongId));
+        registerCompletionListener(fileName, audioFile, targetPos, targetSongId);
+        handleNoActiveDownload(fileName, audioFile, targetPos, targetSongId);
     }
 
-    private void processDownloadResult(String fileName, File audioFile,
-                                        BlockPos targetPos, long targetSongId) {
-        boolean success = waitForProcessOrFile(fileName, audioFile);
+    private void registerCompletionListener(String fileName, File audioFile,
+                                             BlockPos targetPos, long targetSongId) {
+        RhythmSoundManager.addCompletionListener(fileName, success -> {
+            if (success) {
+                logDebug("Download completed via event listener - proceeding to FFT");
+                sleepSafely();
+                processCompletedDownload(audioFile, targetPos, targetSongId);
+            } else {
+                logError("Download failed via event listener");
+                handleDownloadFailure(targetPos);
+            }
+        });
+    }
 
-        if (!success) {
-            handleDownloadFailure(targetPos);
+    private void handleNoActiveDownload(String fileName, File audioFile,
+                                         BlockPos targetPos, long targetSongId) {
+        if (RhythmSoundManager.isDownloading(fileName)) {
             return;
         }
 
-        logDebug("Download/conversion COMPLETE - starting FFT analysis...");
-        sleepSafely(POST_DOWNLOAD_DELAY_MS);
-        processCompletedDownload(audioFile, targetPos, targetSongId);
+        logDebug("No active download process found, checking if file already exists...");
+        RhythmSoundManager.removeCompletionListener(fileName);
+
+        boolean fileExists = audioFile.exists() && audioFile.length() > 0;
+        if (fileExists) {
+            logDebug("File already exists, proceeding to FFT");
+            processCompletedDownload(audioFile, targetPos, targetSongId);
+        } else {
+            logError("No download in progress and file doesn't exist: {}", audioFile);
+            handleDownloadFailure(targetPos);
+        }
     }
 
     private void processCompletedDownload(File audioFile, BlockPos targetPos, long targetSongId) {
@@ -264,84 +311,16 @@ public record DiscInsertedPacket(
         }
     }
 
-    private boolean waitForProcessOrFile(String fileName, File audioFile) {
-        RhythmExecutable.ProcessStream processStream =
-            RhythmExecutable.YT_DLP.getProcessStream(fileName + DOWNLOAD_PROCESS_SUFFIX);
-
-        if (processStream != null) {
-            return waitForProcessStream(processStream);
-        } else {
-            logDebug("No process stream found, waiting for file with stability check...");
-            return waitForStableFile(audioFile, (int) TimeUnit.MINUTES.toSeconds(DOWNLOAD_TIMEOUT_MINUTES));
-        }
-    }
-
-    private boolean waitForProcessStream(RhythmExecutable.ProcessStream processStream) {
-        CountDownLatch completionLatch = new CountDownLatch(1);
-        final boolean[] success = {false};
-
-        subscribeToProcessStream(processStream, completionLatch, success);
-        return awaitProcessCompletion(completionLatch, success);
-    }
-
-    private void subscribeToProcessStream(RhythmExecutable.ProcessStream processStream,
-                                           CountDownLatch latch, boolean[] success) {
-        processStream.subscribe(FFT_SUBSCRIBER_PREFIX + pos.toShortString())
-            .onComplete(() -> {
-                success[0] = true;
-                latch.countDown();
-            })
-            .onError(e -> {
-                logError("Download process error: {}", e.getMessage());
-                latch.countDown();
-            })
-            .start();
-    }
-
-    private boolean awaitProcessCompletion(CountDownLatch latch, boolean[] success) {
-        try {
-            boolean completed = latch.await(DOWNLOAD_TIMEOUT_MINUTES, TimeUnit.MINUTES);
-            if (!completed) {
-                logError("Download process timed out after {} minutes", DOWNLOAD_TIMEOUT_MINUTES);
-                return false;
-            }
-            return success[0];
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return false;
-        }
-    }
-
-    private boolean waitForStableFile(File file, int maxSeconds) {
-        long lastSize = -1;
-        int stableCount = 0;
-
-        for (int i = 0; i < maxSeconds; i++) {
-            if (!sleepSafely(FILE_CHECK_INTERVAL_MS)) {
-                return false;
-            }
-
-            if (file.exists()) {
-                long currentSize = file.length();
-                if (currentSize == lastSize && currentSize > 0) {
-                    stableCount++;
-                    if (stableCount >= FILE_STABLE_COUNT_REQUIRED) {
-                        return true;
-                    }
-                } else {
-                    stableCount = 0;
-                }
-                lastSize = currentSize;
-            }
-        }
-        return false;
-    }
-
     // ==================== FFT Completion ====================
 
     private void processAudioFile(String fileUrl, String cacheKey, BlockPos targetPos, long targetSongId) {
         AudioPreComputer.preComputeFrequenciesFromUrlWithCacheKey(fileUrl, cacheKey, INITIAL_FREQUENCY_DATA_TICKS, targetPos)
-            .thenAccept(freqData -> onFFTComplete(freqData, targetPos, targetSongId));
+            .thenAccept(freqData -> onFFTComplete(freqData, targetPos, targetSongId))
+            .exceptionally(e -> {
+                logError("FFT analysis failed: {}", e.getMessage());
+                handleFFTFailure(ClientSongManager.getInstance(), targetPos);
+                return null;
+            });
     }
 
     private void onFFTComplete(FrequencyData freqData, BlockPos targetPos, long targetSongId) {
@@ -365,7 +344,7 @@ public record DiscInsertedPacket(
         manager.setState(targetPos, PlaybackState.READY);
         manager.setLoadingProgress(targetPos, 1f);
 
-        // Clear download/converting overlay for custom URL discs
+
         if (hasCustomUrl()) {
             String fileName = RhythmSoundManager.getFileName(customUrl);
             DownloadProgressOverlay.stop(fileName);
@@ -385,7 +364,7 @@ public record DiscInsertedPacket(
         logError("FFT analysis failed - null result");
         manager.setState(targetPos, PlaybackState.EMPTY);
 
-        // Clear download/converting overlay for custom URL discs
+
         if (hasCustomUrl()) {
             String fileName = RhythmSoundManager.getFileName(customUrl);
             DownloadProgressOverlay.stopFailed(fileName);
@@ -418,13 +397,11 @@ public record DiscInsertedPacket(
 
     // ==================== Utility ====================
 
-    private boolean sleepSafely(int millis) {
+    private void sleepSafely() {
         try {
-            Thread.sleep(millis);
-            return true;
+            Thread.sleep(DiscInsertedPacket.POST_DOWNLOAD_DELAY_MS);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            return false;
         }
     }
 

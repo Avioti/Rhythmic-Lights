@@ -1,7 +1,7 @@
 package com.rhythm.mixin.client;
 
 import com.mojang.blaze3d.audio.Channel;
-import com.rhythm.audio.SeekableAudioPlayer;
+import com.rhythm.audio.playback.SeekableAudioPlayer;
 import com.rhythm.mixin.accessor.SoundEngineAccessor;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.ChannelAccess;

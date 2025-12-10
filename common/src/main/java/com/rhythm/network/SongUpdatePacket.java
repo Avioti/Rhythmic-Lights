@@ -1,10 +1,10 @@
 package com.rhythm.network;
 
 import com.rhythm.RhythmMod;
-import com.rhythm.audio.AudioPreComputer;
-import com.rhythm.audio.ClientSongManager;
-import com.rhythm.audio.FrequencyData;
-import com.rhythm.audio.RhythmAudioCache;
+import com.rhythm.audio.analysis.AudioPreComputer;
+import com.rhythm.audio.state.ClientSongManager;
+import com.rhythm.audio.analysis.FrequencyData;
+import com.rhythm.audio.cache.RhythmAudioCache;
 import com.rhythm.util.RhythmConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -27,7 +27,6 @@ public record SongUpdatePacket(
 
     // ==================== Constants ====================
 
-    private static final String[] STREAMING_DOMAINS = {"youtube.com", "youtu.be", "spotify.com", "soundcloud.com"};
     private static final int CACHE_WAIT_TIMEOUT_SECONDS = 30;
 
     // ==================== Compact Constructor ====================
@@ -101,21 +100,13 @@ public record SongUpdatePacket(
     // ==================== Custom URL Processing ====================
 
     private void processCustomUrl() {
-        if (isStreamingUrl(customUrl)) {
+        if (RhythmConstants.isStreamingUrl(customUrl)) {
             processStreamingUrl();
         } else {
             processDirectAudioUrl();
         }
     }
 
-    private boolean isStreamingUrl(String url) {
-        for (String domain : STREAMING_DOMAINS) {
-            if (url.contains(domain)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private void processStreamingUrl() {
         logDebug("Streaming URL detected, checking cache...");

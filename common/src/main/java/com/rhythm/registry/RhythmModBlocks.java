@@ -2,9 +2,9 @@ package com.rhythm.registry;
 
 import com.rhythm.RhythmMod;
 import com.rhythm.audio.FrequencyChannel;
-import com.rhythm.block.RhythmBulbBlock;
-import com.rhythm.block.RhythmControllerBlock;
-import com.rhythm.block.RhythmLampBlock;
+import com.rhythm.block.bulbs.RhythmBulbBlock;
+import com.rhythm.block.controller.RhythmControllerBlock;
+import com.rhythm.block.lamps.RhythmLampBlock;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;

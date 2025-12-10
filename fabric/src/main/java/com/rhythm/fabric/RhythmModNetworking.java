@@ -1,7 +1,7 @@
 package com.rhythm.fabric;
 
-import com.rhythm.audio.JukeboxStateManager;
-import com.rhythm.block.RhythmControllerBlock;
+import com.rhythm.audio.state.JukeboxStateManager;
+import com.rhythm.block.controller.RhythmControllerBlock;
 import com.rhythm.network.AutoMetadataPacket;
 import com.rhythm.network.DJSettingsPacket;
 import com.rhythm.network.DiscInsertedPacket;

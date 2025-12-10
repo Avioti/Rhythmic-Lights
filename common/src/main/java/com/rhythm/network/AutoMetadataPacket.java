@@ -10,10 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.stream.Stream;
 
 /**
  * Client -> Server packet for automatic URL disc metadata updates.
@@ -70,7 +67,7 @@ public record AutoMetadataPacket(
      * Handle this packet on the server side.
      */
     public void handleOnServer(ServerPlayer player) {
-        ItemStack stack = findUrlDiscInHand(player);
+        ItemStack stack = RhythmURLDisc.findInPlayerHand(player);
 
         if (stack == null) {
             logWarning("Player not holding a URL disc");
@@ -87,13 +84,6 @@ public record AutoMetadataPacket(
 
     // ==================== Helpers ====================
 
-    private ItemStack findUrlDiscInHand(ServerPlayer player) {
-        return Stream.of(InteractionHand.values())
-            .map(player::getItemInHand)
-            .filter(s -> s.getItem() instanceof RhythmURLDisc)
-            .findFirst()
-            .orElse(null);
-    }
 
     private boolean isUrlMatching(ItemStack stack) {
         String existingUrl = RhythmURLDisc.getUrl(stack);

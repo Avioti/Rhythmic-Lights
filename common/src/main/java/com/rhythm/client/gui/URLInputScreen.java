@@ -1,6 +1,6 @@
 package com.rhythm.client.gui;
 
-import com.rhythm.audio.VideoMetadata;
+import com.rhythm.audio.io.VideoMetadata;
 import com.rhythm.client.gui.widget.StyledEditBox;
 import com.rhythm.client.gui.widget.TextButton;
 import com.rhythm.client.gui.widget.ToggleButton;

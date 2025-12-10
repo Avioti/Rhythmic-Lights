@@ -256,5 +256,21 @@ public class RhythmURLDisc extends Item {
         String url = getUrl(stack);
         return url != null && !url.isEmpty();
     }
+
+    /**
+     * Finds a RhythmURLDisc in either of the player's hands.
+     *
+     * @param player the player to check
+     * @return the ItemStack containing the disc, or null if not found
+     */
+    public static ItemStack findInPlayerHand(Player player) {
+        for (InteractionHand hand : InteractionHand.values()) {
+            ItemStack stack = player.getItemInHand(hand);
+            if (stack.getItem() instanceof RhythmURLDisc) {
+                return stack;
+            }
+        }
+        return null;
+    }
 }
 

@@ -1,7 +1,7 @@
 package com.rhythm.network;
 
 import com.rhythm.RhythmMod;
-import com.rhythm.audio.ClientSongManager;
+import com.rhythm.audio.state.ClientSongManager;
 import com.rhythm.util.RhythmConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

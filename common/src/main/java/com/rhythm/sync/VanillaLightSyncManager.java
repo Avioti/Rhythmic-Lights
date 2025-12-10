@@ -1,10 +1,10 @@
 package com.rhythm.sync;
 
-import com.rhythm.audio.ClientSongManager;
+import com.rhythm.audio.state.ClientSongManager;
 import com.rhythm.audio.FrequencyChannel;
-import com.rhythm.audio.FrequencyData;
-import com.rhythm.audio.PlaybackState;
-import com.rhythm.block.RhythmControllerBlockEntity;
+import com.rhythm.audio.analysis.FrequencyData;
+import com.rhythm.audio.state.PlaybackState;
+import com.rhythm.block.controller.RhythmControllerBlockEntity;
 import com.rhythm.client.light.ColoredLightRegistry;
 import com.rhythm.particle.ColoredParticleEffect;
 import com.rhythm.util.RhythmConstants;

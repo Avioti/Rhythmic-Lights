@@ -78,6 +78,48 @@ public final class RhythmConstants {
     public static final String DEFAULT_AUDIO_FORMAT = "vorbis";
     public static final int MAX_URL_LENGTH = 400;
 
+    // ==================== Streaming Domains ====================
+
+    /** Domains that require yt-dlp for audio extraction */
+    public static final String[] STREAMING_DOMAINS = {
+        "youtube.com", "youtu.be", "spotify.com", "soundcloud.com"
+    };
+
+    /**
+     * Checks if a URL is from a streaming platform that requires yt-dlp.
+     *
+     * @param url the URL to check
+     * @return true if the URL is from a streaming platform
+     */
+    public static boolean isStreamingUrl(String url) {
+        if (url == null || url.isEmpty()) {
+            return false;
+        }
+        for (String domain : STREAMING_DOMAINS) {
+            if (url.contains(domain)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // ==================== Song ID Generation ====================
+
+    private static final int SONG_ID_TIME_MULTIPLIER = 1000;
+    private static final int SONG_ID_POSITION_MODULO = 1000;
+
+    /**
+     * Generates a unique song ID based on game time and jukebox position.
+     * Used to validate async operations and prevent stale data after disc changes.
+     *
+     * @param gameTime current game time in ticks
+     * @param posHashCode hash code of the jukebox position (use BlockPos.hashCode())
+     * @return unique song ID
+     */
+    public static long generateSongId(long gameTime, int posHashCode) {
+        return gameTime * SONG_ID_TIME_MULTIPLIER + Math.abs(posHashCode % SONG_ID_POSITION_MODULO);
+    }
+
     // ==================== File Paths ====================
 
     private static final String RHYTHMMOD_DIR = "rhythmmod";

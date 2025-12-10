@@ -1,8 +1,8 @@
 package com.rhythm.mixin;
 
-import com.rhythm.audio.JukeboxStateManager;
-import com.rhythm.audio.LinkedJukeboxRegistry;
-import com.rhythm.audio.ServerPlaybackTracker;
+import com.rhythm.audio.state.JukeboxStateManager;
+import com.rhythm.audio.state.LinkedJukeboxRegistry;
+import com.rhythm.audio.state.ServerPlaybackTracker;
 import com.rhythm.item.RhythmURLDisc;
 import com.rhythm.network.DiscInsertedPacket;
 import com.rhythm.network.DiscRemovedPacket;

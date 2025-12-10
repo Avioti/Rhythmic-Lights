@@ -1,10 +1,10 @@
 package com.rhythm.network;
 
 import com.rhythm.RhythmMod;
-import com.rhythm.audio.ClientSongManager;
-import com.rhythm.audio.FrequencyData;
-import com.rhythm.audio.PlaybackState;
-import com.rhythm.audio.SeekableAudioPlayer;
+import com.rhythm.audio.state.ClientSongManager;
+import com.rhythm.audio.analysis.FrequencyData;
+import com.rhythm.audio.state.PlaybackState;
+import com.rhythm.audio.playback.SeekableAudioPlayer;
 import com.rhythm.util.RhythmConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
